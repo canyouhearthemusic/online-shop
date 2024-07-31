@@ -17,40 +17,38 @@ func main() {
 	ctx := context.Background()
 	logger := logrus.New().WithContext(ctx)
 
-	cfg, err := config.New()
+	cfg, err := config.Load()
 	if err != nil {
-		logger.Fatalln("failed to configure project")
+		logger.Fatalf("Config couldn't be loaded: %s\n", err)
+		return
 	}
 
 	h := handler.New(handler.WithHTTPHandler())
 
 	srv, err := server.New(server.WithHTTPServer(h.Mux, cfg.ApiGateway.Port))
 	if err != nil {
-		logger.Errorln("failed to create server")
+		logger.Fatalf("Failed to create server: %s\n", err)
 		return
 	}
 
 	if err := srv.Start(); err != nil {
-		logger.Errorln("failed to start server")
-		return
+		logger.Fatalf("Failed to start server: %s\n", err)
 	}
 
-	logger.Infof("server is running on port %s, swagger is at /swagger/index.html\n", cfg.ApiGateway.Port)
+	logger.Infof("Server is running on port %s, swagger is at /swagger/index.html\n", cfg.ApiGateway.Port)
 
 	shutdown := make(chan os.Signal, 1)
 	signal.Notify(shutdown, os.Interrupt, syscall.SIGTERM, syscall.SIGINT)
 
 	<-shutdown
-	logger.Infoln("shutting down server")
+	logger.Infoln("Shutting down server")
 
-	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	ctx, cancel := context.WithTimeout(ctx, 15*time.Second)
 	defer cancel()
 
 	if err := srv.Stop(ctx); err != nil {
-		logger.Errorln("failed to stop server")
-		return
+		logger.Errorf("Failed to stop server: %s", err)
 	}
 
-	logger.Infoln("server stopped")
-
+	logger.Infoln("Server stopped gracefully")
 }
