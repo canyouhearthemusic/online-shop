@@ -77,10 +77,10 @@ func loadConfigFromEnv(cfg *Configs) error {
 		return errors.New("failed to load User config: " + err.Error())
 	}
 
-	cfg.OrderDB.DSN = os.Getenv("POSTGRE_ORDER")
-	cfg.PaymentDB.DSN = os.Getenv("POSTGRE_PAYMENT")
-	cfg.ProductDB.DSN = os.Getenv("POSTGRE_PRODUCT")
-	cfg.UserDB.DSN = os.Getenv("POSTGRE_USER")
+	cfg.OrderDB.DSN = os.Getenv("POSTGRES_ORDER_DSN")
+	cfg.PaymentDB.DSN = os.Getenv("POSTGRES_PAYMENT_DSN")
+	cfg.ProductDB.DSN = os.Getenv("POSTGRES_PRODUCT_DSN")
+	cfg.UserDB.DSN = os.Getenv("POSTGRES_USER_DSN")
 
 	return nil
 }

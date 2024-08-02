@@ -1,7 +1,6 @@
 package response
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/go-chi/render"
@@ -45,19 +44,12 @@ func BadRequest(w http.ResponseWriter, r *http.Request, err error, data any) {
 	render.JSON(w, r, v)
 }
 
-func BadRequests(w http.ResponseWriter, r *http.Request, errs []error, data any) {
-	var errStr string
-
-	for _, err := range errs {
-		errStr += fmt.Sprintf("%s, ", err.Error())
-	}
-
+func BadRequests(w http.ResponseWriter, r *http.Request, errs error) {
 	render.Status(r, http.StatusBadRequest)
 
 	v := Response{
 		Success: false,
-		Data:    data,
-		Message: errStr,
+		Message: errs.Error(),
 	}
 	render.JSON(w, r, v)
 }

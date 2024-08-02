@@ -192,3 +192,5 @@ Temporary Items
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,goland,macos,go
 
 .env
+.vscode
+.idea

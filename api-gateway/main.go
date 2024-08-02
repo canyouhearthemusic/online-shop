@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"os"
 	"os/signal"
 	"syscall"
@@ -22,6 +23,7 @@ func main() {
 		logger.Fatalf("Config couldn't be loaded: %s\n", err)
 		return
 	}
+	fmt.Println(cfg.ApiGateway.Port)
 
 	h := handler.New(handler.WithHTTPHandler())
 
