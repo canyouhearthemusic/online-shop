@@ -19,6 +19,8 @@ func New() *chi.Mux {
 
 	r.Use(middleware.CleanPath)
 
+	r.Use(middleware.Heartbeat("/heartbeat"))
+
 	r.Use(cors.Handler(cors.Options{
 		AllowedOrigins:   []string{"http://*", "https://*"},
 		AllowedMethods:   []string{"GET", "PUT", "POST", "PATCH", "DELETE", "OPTIONS"},

@@ -3,7 +3,7 @@ package handler
 import (
 	"net/http"
 
-	httpHandler "github.com/canyouhearthemusic/online-shop/api-gateway/handler/http"
+	"github.com/canyouhearthemusic/online-shop/api-gateway/handler/httphandler"
 	"github.com/canyouhearthemusic/online-shop/common/server/router"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/render"
@@ -29,10 +29,10 @@ func WithHTTPHandler() Configuration {
 	return func(h *Handler) error {
 		h.Mux = router.New()
 
-		userHandler := httpHandler.NewUserHandler()
-		productHandler := httpHandler.NewProductHandler()
-		orderHandler := httpHandler.NewOrderHandler()
-		paymentHandler := httpHandler.NewPaymentHandler()
+		userHandler := httphandler.NewUserHandler()
+		productHandler := httphandler.NewProductHandler()
+		orderHandler := httphandler.NewOrderHandler()
+		paymentHandler := httphandler.NewPaymentHandler()
 
 		h.Mux.Route("/api/v1", func(r chi.Router) {
 			r.Get("/heartbeat", func(w http.ResponseWriter, r *http.Request) {

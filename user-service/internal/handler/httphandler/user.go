@@ -6,7 +6,6 @@ import (
 	"net/http"
 
 	"github.com/canyouhearthemusic/online-shop/common/server/response"
-	"github.com/canyouhearthemusic/online-shop/common/server/router"
 	"github.com/canyouhearthemusic/online-shop/user-service/internal/domain/user"
 	onlineshop "github.com/canyouhearthemusic/online-shop/user-service/internal/service/online-shop"
 	"github.com/go-chi/chi/v5"
@@ -20,8 +19,8 @@ func NewUserHandler(service *onlineshop.Service) *UserHandler {
 	return &UserHandler{service: service}
 }
 
-func (h *UserHandler) Routes() chi.Router {
-	r := router.New()
+func (h *UserHandler) Routes() *chi.Mux {
+	r := chi.NewMux()
 
 	r.Get("/", h.list)
 	r.Post("/", h.create)

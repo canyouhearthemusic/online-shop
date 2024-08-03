@@ -1,4 +1,4 @@
-package http
+package httphandler
 
 import (
 	"net/http"
@@ -13,7 +13,7 @@ func NewOrderHandler() *OrderHandler {
 	return &OrderHandler{}
 }
 
-func (h *OrderHandler) Routes() chi.Router {
+func (h *OrderHandler) Routes() *chi.Mux {
 	r := chi.NewRouter()
 
 	r.Get("/", h.list)

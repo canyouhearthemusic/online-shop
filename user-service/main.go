@@ -54,7 +54,7 @@ func main() {
 	logger.Infof("Server is running on port %s, swagger is at /swagger/index.html\n", cfg.User.Port)
 
 	shutdown := make(chan os.Signal, 1)
-	signal.Notify(shutdown, os.Interrupt, syscall.SIGTERM, syscall.SIGINT)
+	signal.Notify(shutdown, os.Interrupt, syscall.SIGTERM, syscall.SIGINT, syscall.SIGKILL)
 
 	<-shutdown
 	logger.Infoln("Shutting down server")
